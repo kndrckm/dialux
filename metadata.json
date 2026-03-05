@@ -1,0 +1,5 @@
+{
+  "name": "DIALux Report Extractor",
+  "description": "Extract structured lighting data from DIALux PDF reports with side-by-side verification.",
+  "requestFramePermissions": []
+}
