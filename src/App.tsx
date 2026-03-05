@@ -118,12 +118,16 @@ export default function App() {
   const exportToCSV = useCallback(() => {
     if (!rooms || rooms.length === 0) return;
 
-    let csvContent = "data:text/csv;charset=utf-8,";
+    // Start with a BOM (Byte Order Mark) for proper UTF-8 handling in Excel
+    let csvContent = "\uFEFF";
 
-    // Header row: value columns + unit columns
-    csvContent += "Room Name,Ē Target,Ē Target Unit,Area,Area Unit,Ē Workplane,Ē WP Unit,LPD Space,LPD Space Unit,LPD Working Plane,LPD WP Unit\n";
+    // Updated header labels with standard ASCII characters for maximum compatibility
+    csvContent += "Room Name,Lux Target,Lux Target Unit,Area,Area Unit,Lux Workplane,Lux WP Unit,LPD Space,LPD Space Unit,LPD Working Plane,LPD WP Unit\n";
 
     rooms.forEach(room => {
+      // Helper to clean unit strings (e.g., m² -> m2)
+      const cleanUnit = (unit: string) => unit.replace('m²', 'm2');
+
       const eTarget = parseValueUnit(room.eTarget);
       const aRoom = parseValueUnit(room.aRoom);
       const eWP = parseValueUnit(room.eWorkplane);
@@ -132,11 +136,11 @@ export default function App() {
 
       csvContent += [
         `"${room.roomName}"`,
-        `"${eTarget.value}"`, `"${eTarget.unit}"`,
-        `"${aRoom.value}"`, `"${aRoom.unit}"`,
-        `"${eWP.value}"`, `"${eWP.unit}"`,
-        `"${lpdS.value}"`, `"${lpdS.unit}"`,
-        `"${lpdWP.value}"`, `"${lpdWP.unit}"`,
+        `"${eTarget.value}"`, `"${cleanUnit(eTarget.unit)}"`,
+        `"${aRoom.value}"`, `"${cleanUnit(aRoom.unit)}"`,
+        `"${eWP.value}"`, `"${cleanUnit(eWP.unit)}"`,
+        `"${lpdS.value}"`, `"${cleanUnit(lpdS.unit)}"`,
+        `"${lpdWP.value}"`, `"${cleanUnit(lpdWP.unit)}"`,
       ].join(',') + '\n';
     });
 
@@ -161,7 +165,6 @@ export default function App() {
       <Header
         rooms={rooms}
         onExportCSV={exportToCSV}
-        onChangeApiKey={handleChangeApiKey}
         onReset={handleReset}
       />
 

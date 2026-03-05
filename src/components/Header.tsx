@@ -5,11 +5,10 @@ import { DialuxRoom } from '../services/geminiService';
 interface HeaderProps {
     rooms: DialuxRoom[] | null;
     onExportCSV: () => void;
-    onChangeApiKey: () => void;
     onReset: () => void;
 }
 
-export default function Header({ rooms, onExportCSV, onChangeApiKey, onReset }: HeaderProps) {
+export default function Header({ rooms, onExportCSV, onReset }: HeaderProps) {
     const [showConfirm, setShowConfirm] = useState(false);
 
     const handleReset = () => {
@@ -31,14 +30,6 @@ export default function Header({ rooms, onExportCSV, onChangeApiKey, onReset }: 
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <button
-                        onClick={onChangeApiKey}
-                        className="flex items-center gap-2 border border-[#141414]/15 text-[#141414] px-2 py-1.5 rounded-sm hover:bg-[#141414]/5 transition-colors text-xs"
-                        title="Change API Key"
-                    >
-                        <KeyRound size={12} />
-                    </button>
-
                     {rooms && rooms.length > 0 && (
                         <>
                             <button
