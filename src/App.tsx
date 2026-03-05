@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { extractTextFromPDF } from './services/pdfService';
 import { processDialuxReport, DialuxRoom, parseValueUnit } from './services/geminiService';
-import { getApiKey, setApiKey, removeApiKey, hasApiKey } from './utils';
+import { getApiKey, setApiKey, removeApiKey, hasApiKey, cn } from './utils';
 import { ProcessingStep } from './components/ProgressIndicator';
 import { usePdfDocument } from './hooks/usePdfDocument';
 
@@ -168,7 +168,7 @@ export default function App() {
         onReset={handleReset}
       />
 
-      <main className="px-4 py-3 mx-auto">
+      <main className={cn("px-4 mx-auto w-full", !file ? "h-[calc(100vh-52px)] flex items-center justify-center p-0" : "py-3")}>
         {!file ? (
           <UploadZone onFileDrop={handleFileDrop} />
         ) : (

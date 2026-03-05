@@ -28,7 +28,7 @@ export default function UploadZone({ onFileDrop }: UploadZoneProps) {
     ];
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[70vh] gap-12">
+        <div className="flex flex-col items-center justify-center w-full gap-16 py-8">
             {/* Drop Zone */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
